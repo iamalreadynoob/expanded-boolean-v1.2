@@ -5,17 +5,70 @@ import general.ReferencePoint;
 
 public class Shortcut
 {
+    private Boolean primary = null;
+    private Boolean secondary = null;
 
-    public Boolean not(ExpandedValue first, ReferencePoint point)
+
+    public Shortcut(ExpandedValue first, ReferencePoint point)
     {
-        Boolean result = null;
-
-        if (new Unique().to(first, point)) result = false;
-        else if (!new Unique().to(first, point)) result = true;
-
-        return result;
+        primary = new Unique().to(first, point);
     }
 
-    //TODO: add or, xor, and, nand...
+    public Shortcut(ExpandedValue first, ExpandedValue second, ReferencePoint point)
+    {
+        new Shortcut(first, point);
+        secondary = new Unique().to(second, point);
+    }
+
+    public Boolean not()
+    {
+
+        if (primary) return false;
+        else return true;
+
+    }
+
+    public Boolean and()
+    {
+        if (primary && secondary) return true;
+        else return false;
+    }
+
+    public Boolean or()
+    {
+        if (!primary && !secondary) return false;
+        else return true;
+    }
+
+    public Boolean xor()
+    {
+        if (primary != secondary) return true;
+        else return false;
+    }
+
+    public Boolean ifThen()
+    {
+        if (primary && !secondary) return false;
+        else return true;
+    }
+
+    public Boolean ifAndOnlyIf()
+    {
+        if (primary == secondary) return true;
+        else return false;
+    }
+
+    public Boolean nand()
+    {
+        if (primary && secondary) return false;
+        else return true;
+    }
+
+    public Boolean xnor()
+    {
+        return ifAndOnlyIf();
+    }
+
+
 
 }
